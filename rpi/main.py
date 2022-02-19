@@ -3,10 +3,12 @@ from datetime import datetime
 import string
 from turtle import delay
 from typing import Optional
-from fastapi import FastAPI,logger
+from fastapi import FastAPI, Response
 from fastapi.responses import HTMLResponse
 import asyncio
+from models import PlantBox
 from runner import BackgroundRunner
+from fastapi.responses import JSONResponse
 
 
 app = FastAPI()
@@ -32,8 +34,19 @@ async def read_gettime():
 
     return current_time
 
-@app.get("/requestwater")
-async def read_requestwater():
-    runner.water_requested = True
+@app.get("/getdata")
+async def read_getdata():
+    payload = runner.plant_boxes
+    return payload
+
+
+@app.post("/updatename")
+def update_plantbox_name(value: str, id: int):
+    # Validate
+    if id not in runner.plant_boxes:
+        return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
+
+    runner.plant_boxes[id].name = value
+    return Response(status_code=200)
     
 
