@@ -18,32 +18,100 @@
 <body>
 
     <div class="alert alert-primary" role="alert">
-        <p id="alerttext">This is a primary alert—check it out!</p>
+        <p id="alerttext"></p>
+        <a href="howto" class="btn btn-info" role="button">How to?</a>
     </div>
 
     <div class="container">
         <div class="row">
-            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid red;">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid green;">
 
                 <div class="col">
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control" placeholder="Box name" id="1_name" onblur="saveName(1)">
-                        <input type="date" class="form-control" placeholder="dd/mm/yyyy" id="1_date" onblur="saveDate(1)">
-
+                   
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="1_name" placeholder="Name" onblur="saveName(1)">
+                        <label for="1_name">Box(1) name:</label>
                     </div>
-                    <ul class="list-group">
-                        <li class="list-group-item" id="1_dayssince">DAYSSINCE</li>
-                        <li class="list-group-item" id="1_humid">HUMIDITY</li>
-                        <li class="list-group-item" id="1_lightstatus">LIGHTSTATUS</li>
-                        <li class="list-group-item" id="1_lastspray">LASTSPRAY</li>
+
+                     <div class="form-floating mb-2">
+                        <input type="date" class="form-control" id="1_date" placeholder="dd/mm/yyyy"
+                            onblur="saveDate(1)">
+                        <label for="1_date">Date planted:</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="1_dayssince" readonly>
+                        <label for="1_dayssince">Days planted:</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="1_humid" readonly>
+                        <label for="1_humid">Humidity:</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="1_lightstatus" readonly>
+                        <label for="1_lightstatus">Light status:</label>
+                    </div>
+
+                    <div class="form-floating mb-2">
+                        <input type="datetime" class="form-control" id="1_lastspray" readonly>
+                        <label for="1_lastspray">Last spray:</label>
+                    </div>
+                    
                     </ul>
                 </div>
 
             </div>
 
-            <div class="col d-none d-sm-inline" style="border: 5px solid blue;">
-                <h3>h3h3</h3>
+
+
+            <div class="col d-none d-sm-inline" style="border: 5px solid green;">
+                <div class="row">
+                    <div class="col-sm">
+                        <div>
+                            <button type="button" class="btn btn-success">Lights on</button>
+                            <button type="button" class="btn btn-success">Lights off</button>
+                        </div>
+
+
+                        <div class="form-floating mb-3">
+                            <input type="time" class="form-control" id="1_floatinglightsontime"
+                                placeholder="name@example.com">
+                            <label for="1_floatinglightsontime">Lights on at:</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="time" class="form-control" id="1_floatinglightsofftime" placeholder="Password">
+                            <label for="1_floatinglightsontime">Lights off at:</label>
+                        </div>
+
+
+
+
+
+
+                    </div>
+                    <div class="col-sm">
+                        <button type="button" class="btn btn-success">Success</button>
+                    </div>
+                    <div class="col-sm justify-content-end">
+
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Schedule:</label>
+                            <textarea class="form-control form-control-lg" style="resize: none;"
+                                id="exampleFormControlTextarea1" rows="3"></textarea>
+
+                        </div>
+                        <button type="button" class="btn btn-success">Save all</button>
+
+                    </div>
+
+                </div>
+
+
+
             </div>
+
         </div>
     </div>
 
@@ -55,13 +123,13 @@
         let plantBoxes = {};
         const dataRefreshRate = 5; // In seconds
 
-        async function main() {      
+        async function main() {
             setInterval(async () => {
                 let result = await fetch("/gettime");
                 document.getElementById("alerttext").innerText = await result.text();
             }, 1000);
 
-            setInterval(async () => {    
+            setInterval(async () => {
                 await fetchData();
                 updateUI();
             }, 1000 * dataRefreshRate);
@@ -71,7 +139,7 @@
         }
 
         async function fetchData() {
-            console.log("Fetching data");       
+            console.log("Fetching data");
             let dataResponse = await fetch("/getdata");
             let data = await dataResponse.json();
             plantBoxes = data;
@@ -79,8 +147,8 @@
 
         async function saveName(id) {
             let newName = document.getElementById("1_name").value;
-            console.log("Updating name to :" + newName + " for plantbox: " + id )
-            
+            console.log("Updating name to \"" + newName + "\" for plantbox: " + id)
+
             await fetch(`/updatename?value=${newName}&id=${id}`, {
                 method: 'POST',
             });
@@ -91,10 +159,11 @@
         async function saveDate(id) {
             let date = document.getElementById("1_date").value;
             let newDate = new Date(date);
+            console.log("Updating date to: " + newDate + " for plantbox: " + id)
             await fetch(`/updatedate?value=${newDate.toISOString()}&id=${id}`, {
-                method: 'POST'        
+                method: 'POST'
             });
-            
+
             await fetchData();
             updateUI();
         }
@@ -104,9 +173,11 @@
             for (let i = 1; i <= Object.keys(plantBoxes).length; i++) {
                 const id_prefix = i + "_";
                 document.getElementById(id_prefix + "name").value = plantBoxes[i].name;
-            } 
+                document.getElementById(id_prefix + "date").date = plantBoxes[i].date;
+                document.getElementById(id_prefix + "humid").text = plantBoxes[i].humidity;
+            }
         }
- 
+
         main();
 
     </script>
