@@ -1,7 +1,7 @@
 #include <ESP8266WiFi.h>
 
-const char* ssid = ".";
-const char* password = "Vochtplek123!";
+const char* ssid = "hotspot";
+const char* password = "12345678";
  
 int ledPin = 13; // GPIO13---D7 of NodeMCU
 WiFiServer server(80);
