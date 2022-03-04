@@ -42,26 +42,17 @@ async def read_getdata():
     return payload
 
 
-@app.post("/updatename")
-async def update_plantbox_name(value: str, id: int):
-    print(id,value)
+@app.post("/updateall")
+async def update_plantbox_name(data: dict, id: int):
+    print(id, data)
     await runner.load_data()
     #Validate
     if id not in runner.plant_boxes:
         return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
-    runner.update_name(id, value)
+
+    runner.update(id, data)
     return Response(status_code=200)
 
-
-@app.post("/updatedate")
-async def update_plantbox_date(value: str, id: int):
-    await runner.load_data()
-    # Validate
-    if id not in runner.plant_boxes:
-        return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
-
-    runner.update_date(id, value)
-    return Response(status_code=200)
 
 
     

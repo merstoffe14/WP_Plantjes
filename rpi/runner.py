@@ -5,7 +5,6 @@ import os,shutil,jsonpickle
 
 class BackgroundRunner:
     def __init__(self):
-        self.water_requested = False
 
         self.plant_boxes = {
             1: PlantBox(1)  # ,
@@ -45,13 +44,10 @@ class BackgroundRunner:
         with open('data.json', 'w') as json_file:
             json_file.write(jsonpickle.encode(self.plant_boxes))
 
-    async def update_name(self, id: int, value: str):
-        self.plant_boxes[id].name = value
+    async def update_data(self, id: int, data: dict):
+        self.plant_boxes[id] = data
         await self.save_data()
 
-    async def update_date(self, id: int, value: str):
-        self.plant_boxes[id].date = value
-        await self.save_data()
 
     def loop(self):
         pass
