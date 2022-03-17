@@ -18,14 +18,14 @@
 <body>
 
 
-    
+
     <div class="alert alert-success sticky-top" role="alert">
 
 
 
         <div class="progress">
-            <div class="progress-bar progress-bar-striped" id="" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                aria-valuemin="0" aria-valuemax="100">25%</div>
+            <div class="progress-bar progress-bar-striped" id="" role="progressbar" style="width: 25%;"
+                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
         </div>
 
         <p id="alerttext"></p>
@@ -36,12 +36,12 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid green;">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid red;">
 
                 <div class="col">
 
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" id="1_name" placeholder="Name" onblur="saveName(1)" >
+                        <input type="text" class="form-control" id="1_name" placeholder="Name">
                         <label for="1_name">Box(1) name:</label>
                     </div>
 
@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="form-floating mb-1">
-                        <input type="text" class="form-control" id="1_dayssince" readonly >
+                        <input type="text" class="form-control" id="1_dayssince" readonly>
                         <label for="1_dayssince">Days planted:</label>
                     </div>
 
@@ -77,22 +77,22 @@
 
 
 
-            <div class="col d-none d-sm-inline" style="border: 5px solid green;">
+            <div class="col d-none d-sm-inline" style="border: 5px solid red;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
-                            <button type="button" class="btn btn-success mt-1">Lights on</button>
-                            <button type="button" class="btn btn-success mt-1">Lights off</button>
+                            <button type="button" class="btn btn-success mt-1" id="1_lonabutton">Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="1_lofabutton">Lights off</button>
                         </div>
 
 
                         <div class="form-floating mb-3 mt-1">
                             <input type="time" class="form-control" id="1_lona">
-                            <label for="1_lona" >Lights on at:</label>
+                            <label for="1_lona">Lights on at:</label>
                         </div>
                         <div class="form-floating">
                             <input type="time" class="form-control" id="1_lofa">
-                            <label for="1_lofa" >Lights off at:</label>
+                            <label for="1_lofa">Lights off at:</label>
                         </div>
 
                     </div>
@@ -117,12 +117,12 @@
 
                         <div class="mb-3">
                             <label for="1_schedule" class="form-label">Schedule:</label>
-                            <textarea class="form-control form-control-lg" style="resize: none;"
-                                id="1_schedule" rows="3"></textarea>
+                            <textarea class="form-control form-control-lg" style="resize: none;" id="1_schedule"
+                                rows="3"></textarea>
 
                         </div>
                         <button type="button" class="btn btn-success" onclick=saveAll(1)>Save all</button>
-                        
+
 
                     </div>
 
@@ -137,6 +137,320 @@
 
 
     </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid green;">
+    
+                <div class="col">
+    
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" id="2_name" placeholder="Name">
+                        <label for="2_name">Box(2) name:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="date" class="form-control" id="2_date" placeholder="dd/mm/yyyy">
+                        <label for="2_date">Date planted:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="2_dayssince" readonly>
+                        <label for="2_dayssince">Days planted:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="2_humid" readonly>
+                        <label for="2_humid">Humidity:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="2_lightstatus" readonly>
+                        <label for="2_lightstatus">Light status:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="datetime" class="form-control" id="2_lastspray" readonly>
+                        <label for="2_lastspray">Last spray:</label>
+                    </div>
+    
+                    </ul>
+                </div>
+    
+            </div>
+    
+    
+    
+            <div class="col d-none d-sm-inline" style="border: 5px solid green;">
+                <div class="row">
+                    <div class="col-sm">
+                        <div>
+                            <button type="button" class="btn btn-success mt-1" id="2_lonabutton">Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="2_lofabutton">Lights off</button>
+                        </div>
+    
+    
+                        <div class="form-floating mb-3 mt-1">
+                            <input type="time" class="form-control" id="2_lona">
+                            <label for="2_lona">Lights on at:</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="time" class="form-control" id="2_lofa">
+                            <label for="2_lofa">Lights off at:</label>
+                        </div>
+    
+                    </div>
+                    <div class="col-sm">
+    
+                        <button type="button" class="btn btn-success mt-1">Test spray</button>
+    
+                        <div class="form-floating mb-3 mt-1">
+                            <input type="text" class="form-control" id="2_spraytime">
+                            <label for="2_spraytime">Spray time [s]:</label>
+                        </div>
+    
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="2_crithumid">
+                            <label for="2_crithumid">Critical humidity:</label>
+                        </div>
+    
+    
+    
+                    </div>
+                    <div class="col-sm justify-content-end">
+    
+                        <div class="mb-3">
+                            <label for="2_schedule" class="form-label">Schedule:</label>
+                            <textarea class="form-control form-control-lg" style="resize: none;" id="2_schedule"
+                                rows="3"></textarea>
+    
+                        </div>
+                        <button type="button" class="btn btn-success" onclick=saveAll(2)>Save all</button>
+    
+    
+                    </div>
+    
+                </div>
+    
+    
+    
+            </div>
+    
+    
+        </div>
+    
+    
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid blue;">
+    
+                <div class="col">
+    
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" id="3_name" placeholder="Name">
+                        <label for="3_name">Box(3) name:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="date" class="form-control" id="3_date" placeholder="dd/mm/yyyy">
+                        <label for="3_date">Date planted:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="3_dayssince" readonly>
+                        <label for="3_dayssince">Days planted:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="3_humid" readonly>
+                        <label for="3_humid">Humidity:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="3_lightstatus" readonly>
+                        <label for="3_lightstatus">Light status:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="datetime" class="form-control" id="3_lastspray" readonly>
+                        <label for="3_lastspray">Last spray:</label>
+                    </div>
+    
+                    </ul>
+                </div>
+    
+            </div>
+    
+    
+    
+            <div class="col d-none d-sm-inline" style="border: 5px solid blue;">
+                <div class="row">
+                    <div class="col-sm">
+                        <div>
+                            <button type="button" class="btn btn-success mt-1" id="3_lonabutton">Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="3_lofabutton">Lights off</button>
+                        </div>
+    
+    
+                        <div class="form-floating mb-3 mt-1">
+                            <input type="time" class="form-control" id="3_lona">
+                            <label for="3_lona">Lights on at:</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="time" class="form-control" id="3_lofa">
+                            <label for="3_lofa">Lights off at:</label>
+                        </div>
+    
+                    </div>
+                    <div class="col-sm">
+    
+                        <button type="button" class="btn btn-success mt-1">Test spray</button>
+    
+                        <div class="form-floating mb-3 mt-1">
+                            <input type="text" class="form-control" id="3_spraytime">
+                            <label for="3_spraytime">Spray time [s]:</label>
+                        </div>
+    
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="3_crithumid">
+                            <label for="3_crithumid">Critical humidity:</label>
+                        </div>
+    
+    
+    
+                    </div>
+                    <div class="col-sm justify-content-end">
+    
+                        <div class="mb-3">
+                            <label for="3_schedule" class="form-label">Schedule:</label>
+                            <textarea class="form-control form-control-lg" style="resize: none;" id="3_schedule"
+                                rows="3"></textarea>
+    
+                        </div>
+                        <button type="button" class="btn btn-success" onclick=saveAll(3)>Save all</button>
+    
+    
+                    </div>
+    
+                </div>
+    
+    
+    
+            </div>
+    
+    
+        </div>
+    
+    
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid black;">
+    
+                <div class="col">
+    
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" id="4_name" placeholder="Name">
+                        <label for="4_name">Box(4) name:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="date" class="form-control" id="4_date" placeholder="dd/mm/yyyy">
+                        <label for="4_date">Date planted:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="4_dayssince" readonly>
+                        <label for="4_dayssince">Days planted:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="4_humid" readonly>
+                        <label for="4_humid">Humidity:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="text" class="form-control" id="4_lightstatus" readonly>
+                        <label for="4_lightstatus">Light status:</label>
+                    </div>
+    
+                    <div class="form-floating mb-1">
+                        <input type="datetime" class="form-control" id="4_lastspray" readonly>
+                        <label for="4_lastspray">Last spray:</label>
+                    </div>
+    
+                    </ul>
+                </div>
+    
+            </div>
+    
+    
+    
+            <div class="col d-none d-sm-inline" style="border: 5px solid black;">
+                <div class="row">
+                    <div class="col-sm">
+                        <div>
+                            <button type="button" class="btn btn-success mt-1" id="4_lonabutton">Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="4_lofabutton">Lights off</button>
+                        </div>
+    
+    
+                        <div class="form-floating mb-3 mt-1">
+                            <input type="time" class="form-control" id="4_lona">
+                            <label for="4_lona">Lights on at:</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="time" class="form-control" id="4_lofa">
+                            <label for="4_lofa">Lights off at:</label>
+                        </div>
+    
+                    </div>
+                    <div class="col-sm">
+    
+                        <button type="button" class="btn btn-success mt-1">Test spray</button>
+    
+                        <div class="form-floating mb-3 mt-1">
+                            <input type="text" class="form-control" id="4_spraytime">
+                            <label for="4_spraytime">Spray time [s]:</label>
+                        </div>
+    
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="4_crithumid">
+                            <label for="4_crithumid">Critical humidity:</label>
+                        </div>
+    
+    
+    
+                    </div>
+                    <div class="col-sm justify-content-end">
+    
+                        <div class="mb-3">
+                            <label for="4_schedule" class="form-label">Schedule:</label>
+                            <textarea class="form-control form-control-lg" style="resize: none;" id="4_schedule"
+                                rows="3"></textarea>
+    
+                        </div>
+                        <button type="button" class="btn btn-success" onclick=saveAll(4)>Save all</button>
+    
+    
+                    </div>
+    
+                </div>
+    
+    
+    
+            </div>
+    
+    
+        </div>
+    
+    
+    </div>
+
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -154,7 +468,6 @@
 
             setInterval(async () => {
                 await fetchData();
-                updateUI();
             }, 1000 * dataRefreshRate);
 
             await fetchData();
@@ -168,64 +481,91 @@
             plantBoxes = data;
         }
 
-        async function saveName(id) {
-            let newName = document.getElementById("1_name").value;
-            console.log("Updating name to \"" + newName + "\" for plantbox: " + id)
-
-            await fetch(`/updatename?value=${newName}&id=${id}`, {
-                method: 'POST',
-            });
-            await fetchData();
-            updateUI();
-        }
-
-        async function saveDate(id) {
-            let date = document.getElementById("1_date").value;
-            let newDate = new Date(date);
-            console.log("Updating date to: " + newDate + " for plantbox: " + id)
-            await fetch(`/updatedate?value=${newDate.toISOString()}&id=${id}`, {
-                method: 'POST'
-            });
-
-            await fetchData();
-            updateUI();
-        }
-
+        //deze default values werken ni
         async function saveAll(id) {
-            let name = document.getElementById(id + "_name").value;
-            let date = document.getElementById(id + "_date").value;
-            let lona = document.getElementById(id + "_lona").value;
-            let lofa = document.getElementById(id + "_lofa").value;
-            let spraytime = document.getElementById(id + "_spraytime").value;
-            let crithumid = document.getElementById(id + "_crithumid").value;
-            let schedule = document.getElementById(id + "_schedule").value;
-            
+            let name = document.getElementById(id + "_name").value ?? "Plantbak " + id;
+            let date = new Date(document.getElementById(id + "_date").value ?? "2022-01-01");
+            let lona = new String(document.getElementById(id + "_lona").value ?? "00:00");
+            let lofa = new String(document.getElementById(id + "_lofa").value ?? "00:00");
+            let spraytime = document.getElementById(id + "_spraytime").value ?? 0;
+            let crithumid = document.getElementById(id + "_crithumid").value ?? 0;
+            let schedule = document.getElementById(id + "_schedule").value ?? "";
+
+            lonasplits = lona.split(":");
+            lonas = parseInt(lonasplits[0]) * 3600 + parseInt(lonasplits[1]) * 60;
+            lofasplits = lofa.split(":");
+            lofas = parseInt(lofasplits[0]) * 3600 + parseInt(lofasplits[1]) * 60;
+            spraytime = parseInt(spraytime);
+            crithumid = parseFloat(crithumid);
+
+
             var plantbak = {
-                "id": id,
                 "name": name,
                 "date": date,
-                "lona": lona,
-                "lofa": lofa,
+                "lona": lonas,
+                "lofa": lofas,
                 "spraytime": spraytime,
                 "crithumid": crithumid,
                 "schedule": schedule
-                };
-            
-            console.log("updating plantbox: \n" + plantbak);
+            };
 
-            await fetch(`/updateall?data=${plantbak}&id=${id}`, {
+
+            //iets maken om te checken of empty
+
+
+            let payload = JSON.stringify(plantbak);
+            console.log(payload);
+
+            await fetch(`/upall?id=${id}`, {
+                headers: { "Content-Type": "application/json" },
                 method: 'POST',
+                body: payload
             });
 
-        }   
 
+
+
+        }
+
+        // Call deze functie enkel on reload of save all. (save all nog doen)
         function updateUI() {
             console.log("Updating UI");
             for (let i = 1; i <= Object.keys(plantBoxes).length; i++) {
                 const id_prefix = i + "_";
                 document.getElementById(id_prefix + "name").value = plantBoxes[i].name;
-                document.getElementById(id_prefix + "date").date = plantBoxes[i].date;
-                document.getElementById(id_prefix + "humid").text = plantBoxes[i].humidity;
+
+                let stringDate = new String(plantBoxes[i].date);
+                datesplits = stringDate.split("T");
+                document.getElementById(id_prefix + "date").value = datesplits[0];
+                //deze tijdsomzetting wil ik efficienter
+                let lonas = plantBoxes[i].lona
+                let lonah = Math.floor(lonas/3600);
+                let lonam = (lonas % 3600)/60;
+                if (lonah < 10) {
+                    lonah = new String("0" + lonah)
+                }
+                if (lonam < 10) {
+                    lonam = new String("0" + lonam)
+                }
+                lonaString = new String(lonah + ":" + lonam);
+                document.getElementById(id_prefix + "lona").value = lonaString;
+
+                let lofas = plantBoxes[i].lofa
+                let lofah = Math.floor(lofas / 3600);
+                let lofam = (lofas % 3600) / 60;
+                if (lofah < 10) {
+                    lofah = new String("0" + lofah)
+                }
+                if (lofam < 10) {
+                    lofam = new String("0" + lofam)
+                }
+                lofaString = new String(lofah + ":" + lofam);
+                document.getElementById(id_prefix + "lofa").value = lofaString;
+
+
+                document.getElementById(id_prefix + "spraytime").value = plantBoxes[i].spraytime;
+                document.getElementById(id_prefix + "crithumid").value = plantBoxes[i].crithumid;
+                document.getElementById(id_prefix + "schedule").value = plantBoxes[i].schedule;
             }
         }
 

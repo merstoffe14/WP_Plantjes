@@ -2,9 +2,12 @@ from datetime import datetime
 from fastapi import FastAPI, Response
 from fastapi.responses import HTMLResponse
 import asyncio
+import jsonpickle
 from models import PlantBox
+from models import PlantBoxDataReceive
 from runner import BackgroundRunner
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
 
 
 
@@ -42,15 +45,17 @@ async def read_getdata():
     return payload
 
 
-@app.post("/updateall")
-async def update_plantbox_name(data: dict, id: int):
-    print(id, data)
-    await runner.load_data()
+@app.post("/upall") 
+async def update_plantbox_name(plantbox_data: PlantBoxDataReceive, id: int):
+    
     #Validate
-    if id not in runner.plant_boxes:
+    if str(id) not in runner.plant_boxes:
         return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
 
-    runner.update(id, data)
+    stored_box = runner.plant_boxes[str(id)]
+    stored_box.user_update(plantbox_data)
+    await runner.save_data()
+
     return Response(status_code=200)
 
 

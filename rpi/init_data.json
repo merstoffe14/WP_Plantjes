@@ -1,8 +1,142 @@
 {
-    "boxes": [
-        {},
-        {},
-        {},
-        {}
-    ]
-}   
+    "1": {
+        "py/object": "models.PlantBox",
+        "id": 1,
+        "name": "",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        },
+        "lona": 0,
+        "lofa": 0,
+        "spraytime": 0,
+        "crithumid": 0,
+        "schedule": "",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": false,
+        "last_spray": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        }
+    },
+    "2": {
+        "py/object": "models.PlantBox",
+        "id": 2,
+        "name": "",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        },
+        "lona": 0,
+        "lofa": 0,
+        "spraytime": 0,
+        "crithumid": 0,
+        "schedule": "",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": false,
+        "last_spray": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        }
+    },
+    "3": {
+        "py/object": "models.PlantBox",
+        "id": 3,
+        "name": "",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        },
+        "lona": 0,
+        "lofa": 0,
+        "spraytime": 0,
+        "crithumid": 0,
+        "schedule": "",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": false,
+        "last_spray": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        }
+    },
+    "4": {
+        "py/object": "models.PlantBox",
+        "id": 4,
+        "name": "",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        },
+        "lona": 0,
+        "lofa": 0,
+        "spraytime": 0,
+        "crithumid": 0,
+        "schedule": "",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": false,
+        "last_spray": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        }
+    }
+}

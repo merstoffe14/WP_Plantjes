@@ -7,12 +7,13 @@ class BackgroundRunner:
     def __init__(self):
 
         self.plant_boxes = {
-            1: PlantBox(1)  # ,
-            # 2: PlantBox(2),
-            # 3: PlantBox(3),
-            # 4: PlantBox(4)
+             1: PlantBox(1),
+             2: PlantBox(2),
+             3: PlantBox(3),
+             4: PlantBox(4)
         }
 
+        
     async def run_main(self):
 
         while True:
@@ -35,6 +36,8 @@ class BackgroundRunner:
         with open('data.json', 'r') as json_file:
             json_data = json_file.read()
             self.plant_boxes = jsonpickle.decode(json_data)
+            
+           
 
 
     # SAVE READ PROBLEEM CHECKEN
@@ -43,10 +46,6 @@ class BackgroundRunner:
         print("Saving data")
         with open('data.json', 'w') as json_file:
             json_file.write(jsonpickle.encode(self.plant_boxes))
-
-    async def update_data(self, id: int, data: dict):
-        self.plant_boxes[id] = data
-        await self.save_data()
 
 
     def loop(self):
