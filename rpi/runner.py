@@ -1,6 +1,7 @@
 import asyncio
 from models import PlantBox
 import os,shutil,jsonpickle
+from datetime import datetime
 
 
 class BackgroundRunner:
@@ -37,16 +38,30 @@ class BackgroundRunner:
             json_data = json_file.read()
             self.plant_boxes = jsonpickle.decode(json_data)
             
-           
-
-
-    # SAVE READ PROBLEEM CHECKEN
     # Saving data to locally saved file
     async def save_data(self):
         print("Saving data")
         with open('data.json', 'w') as json_file:
             json_file.write(jsonpickle.encode(self.plant_boxes))
 
+#nog de lampen zelf aan en uit doen, daarom de if
+    async def lamp(self, id: int, status: int):
+        if status == 1:
+            self.plant_boxes[str(id)].light_status = 1
+        elif status == 0:  
+            self.plant_boxes[str(id)].light_status = 0
+        else:
+            print("given status is not a valid status for lamp") 
+        pass
+
+    async def spray(self, id:int, spraytime:int):
+        now = datetime.now()
+        self.plant_boxes[str(id)].last_spray = now.strftime("%H:%M:%S")
+        print("Spraying at " + str(id) + " for: " + str(spraytime) + " seconds")
+        #pomp aan, valve open, pomp uit, valve toe.
+    
+    async def getwaterlevel():
+        return 0.30
 
     def loop(self):
         pass

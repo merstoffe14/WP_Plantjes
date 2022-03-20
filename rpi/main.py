@@ -37,6 +37,10 @@ async def read_gettime():
     current_time = now.strftime("%H:%M:%S")
     return current_time
 
+@app.get("/getwaterlevel")
+async def read_getwaterlevel():
+    return runner.getwaterlevel()
+
 
 @app.get("/getdata")
 async def read_getdata():
@@ -58,6 +62,23 @@ async def update_plantbox_name(plantbox_data: PlantBoxDataReceive, id: int):
 
     return Response(status_code=200)
 
+
+@app.get("/lamp")
+async def lamp(id: int, status: int):
+    #Validate
+    if str(id) not in runner.plant_boxes:
+        return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
+    await runner.lamp(id,status)
+    await runner.save_data()
+    return Response(status_code=200)
+
+
+@app.get("/spraytest")
+async def spraytest(id: int):
+    #Validate
+    if str(id) not in runner.plant_boxes:
+        return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
+    await runner.spray(id,runner.plant_boxes[str(id)].spraytime)
 
 
     

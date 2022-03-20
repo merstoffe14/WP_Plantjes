@@ -27,7 +27,7 @@ class PlantBox:
         self.schedule = "" 
         self.days_planted = 0
         self.humidity: float = 0
-        self.light_status = False
+        self.light_status = 0
         self.last_spray: datetime = datetime(2022, 1, 1)
 
     def user_update(self, update: PlantBoxDataReceive):

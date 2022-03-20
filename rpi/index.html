@@ -24,7 +24,7 @@
 
 
         <div class="progress">
-            <div class="progress-bar progress-bar-striped" id="" role="progressbar" style="width: 25%;"
+            <div class="progress-bar progress-bar-striped" id="waterlevelbar" role="progressbar" style="width: 25%;"
                 aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
         </div>
 
@@ -81,8 +81,10 @@
                 <div class="row">
                     <div class="col-sm">
                         <div>
-                            <button type="button" class="btn btn-success mt-1" id="1_lonabutton">Lights on</button>
-                            <button type="button" class="btn btn-success mt-1" id="1_lofabutton">Lights off</button>
+                            <button type="button" class="btn btn-success mt-1" id="1_lonabutton"
+                                onclick=lampUpdate(1,1)>Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="1_lofabutton"
+                                onclick=lampUpdate(1,0)>Lights off</button>
                         </div>
 
 
@@ -98,7 +100,7 @@
                     </div>
                     <div class="col-sm">
 
-                        <button type="button" class="btn btn-success mt-1">Test spray</button>
+                        <button type="button" class="btn btn-success mt-1" onclick="spraytest(1)">Test spray</button>
 
                         <div class="form-floating mb-3 mt-1">
                             <input type="text" class="form-control" id="1_spraytime">
@@ -141,55 +143,57 @@
     <div class="container">
         <div class="row">
             <div class="col-6 col-sm-3 d-flex" style="border: 5px solid green;">
-    
+
                 <div class="col">
-    
+
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" id="2_name" placeholder="Name">
                         <label for="2_name">Box(2) name:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="date" class="form-control" id="2_date" placeholder="dd/mm/yyyy">
                         <label for="2_date">Date planted:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="2_dayssince" readonly>
                         <label for="2_dayssince">Days planted:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="2_humid" readonly>
                         <label for="2_humid">Humidity:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="2_lightstatus" readonly>
                         <label for="2_lightstatus">Light status:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="datetime" class="form-control" id="2_lastspray" readonly>
                         <label for="2_lastspray">Last spray:</label>
                     </div>
-    
+
                     </ul>
                 </div>
-    
+
             </div>
-    
-    
-    
+
+
+
             <div class="col d-none d-sm-inline" style="border: 5px solid green;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
-                            <button type="button" class="btn btn-success mt-1" id="2_lonabutton">Lights on</button>
-                            <button type="button" class="btn btn-success mt-1" id="2_lofabutton">Lights off</button>
+                            <button type="button" class="btn btn-success mt-1" id="2_lonabutton"
+                                onclick=lampUpdate(2,1)>Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="2_lofabutton"
+                                onclick=lampUpdate(2,0)>Lights off</button>
                         </div>
-    
-    
+
+
                         <div class="form-floating mb-3 mt-1">
                             <input type="time" class="form-control" id="2_lona">
                             <label for="2_lona">Lights on at:</label>
@@ -198,102 +202,104 @@
                             <input type="time" class="form-control" id="2_lofa">
                             <label for="2_lofa">Lights off at:</label>
                         </div>
-    
+
                     </div>
                     <div class="col-sm">
-    
-                        <button type="button" class="btn btn-success mt-1">Test spray</button>
-    
+
+                        <button type="button" class="btn btn-success mt-1" onclick="spraytest(2)">Test spray</button>
+
                         <div class="form-floating mb-3 mt-1">
                             <input type="text" class="form-control" id="2_spraytime">
                             <label for="2_spraytime">Spray time [s]:</label>
                         </div>
-    
+
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="2_crithumid">
                             <label for="2_crithumid">Critical humidity:</label>
                         </div>
-    
-    
-    
+
+
+
                     </div>
                     <div class="col-sm justify-content-end">
-    
+
                         <div class="mb-3">
                             <label for="2_schedule" class="form-label">Schedule:</label>
                             <textarea class="form-control form-control-lg" style="resize: none;" id="2_schedule"
                                 rows="3"></textarea>
-    
+
                         </div>
                         <button type="button" class="btn btn-success" onclick=saveAll(2)>Save all</button>
-    
-    
+
+
                     </div>
-    
+
                 </div>
-    
-    
-    
+
+
+
             </div>
-    
-    
+
+
         </div>
-    
-    
+
+
     </div>
 
     <div class="container">
         <div class="row">
             <div class="col-6 col-sm-3 d-flex" style="border: 5px solid blue;">
-    
+
                 <div class="col">
-    
+
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" id="3_name" placeholder="Name">
                         <label for="3_name">Box(3) name:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="date" class="form-control" id="3_date" placeholder="dd/mm/yyyy">
                         <label for="3_date">Date planted:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="3_dayssince" readonly>
                         <label for="3_dayssince">Days planted:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="3_humid" readonly>
                         <label for="3_humid">Humidity:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="3_lightstatus" readonly>
                         <label for="3_lightstatus">Light status:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="datetime" class="form-control" id="3_lastspray" readonly>
                         <label for="3_lastspray">Last spray:</label>
                     </div>
-    
+
                     </ul>
                 </div>
-    
+
             </div>
-    
-    
-    
+
+
+
             <div class="col d-none d-sm-inline" style="border: 5px solid blue;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
-                            <button type="button" class="btn btn-success mt-1" id="3_lonabutton">Lights on</button>
-                            <button type="button" class="btn btn-success mt-1" id="3_lofabutton">Lights off</button>
+                            <button type="button" class="btn btn-success mt-1" id="3_lonabutton"
+                                onclick=lampUpdate(3,1)>Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="3_lofabutton"
+                                onclick=lampUpdate(3,0)>Lights off</button>
                         </div>
-    
-    
+
+
                         <div class="form-floating mb-3 mt-1">
                             <input type="time" class="form-control" id="3_lona">
                             <label for="3_lona">Lights on at:</label>
@@ -302,102 +308,104 @@
                             <input type="time" class="form-control" id="3_lofa">
                             <label for="3_lofa">Lights off at:</label>
                         </div>
-    
+
                     </div>
                     <div class="col-sm">
-    
-                        <button type="button" class="btn btn-success mt-1">Test spray</button>
-    
+
+                        <button type="button" class="btn btn-success mt-1" onclick="spraytest(3)">Test spray</button>
+
                         <div class="form-floating mb-3 mt-1">
                             <input type="text" class="form-control" id="3_spraytime">
                             <label for="3_spraytime">Spray time [s]:</label>
                         </div>
-    
+
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="3_crithumid">
                             <label for="3_crithumid">Critical humidity:</label>
                         </div>
-    
-    
-    
+
+
+
                     </div>
                     <div class="col-sm justify-content-end">
-    
+
                         <div class="mb-3">
                             <label for="3_schedule" class="form-label">Schedule:</label>
                             <textarea class="form-control form-control-lg" style="resize: none;" id="3_schedule"
                                 rows="3"></textarea>
-    
+
                         </div>
                         <button type="button" class="btn btn-success" onclick=saveAll(3)>Save all</button>
-    
-    
+
+
                     </div>
-    
+
                 </div>
-    
-    
-    
+
+
+
             </div>
-    
-    
+
+
         </div>
-    
-    
+
+
     </div>
-    
+
     <div class="container">
         <div class="row">
             <div class="col-6 col-sm-3 d-flex" style="border: 5px solid black;">
-    
+
                 <div class="col">
-    
+
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" id="4_name" placeholder="Name">
                         <label for="4_name">Box(4) name:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="date" class="form-control" id="4_date" placeholder="dd/mm/yyyy">
                         <label for="4_date">Date planted:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="4_dayssince" readonly>
                         <label for="4_dayssince">Days planted:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="4_humid" readonly>
                         <label for="4_humid">Humidity:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="text" class="form-control" id="4_lightstatus" readonly>
                         <label for="4_lightstatus">Light status:</label>
                     </div>
-    
+
                     <div class="form-floating mb-1">
                         <input type="datetime" class="form-control" id="4_lastspray" readonly>
                         <label for="4_lastspray">Last spray:</label>
                     </div>
-    
+
                     </ul>
                 </div>
-    
+
             </div>
-    
-    
-    
+
+
+
             <div class="col d-none d-sm-inline" style="border: 5px solid black;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
-                            <button type="button" class="btn btn-success mt-1" id="4_lonabutton">Lights on</button>
-                            <button type="button" class="btn btn-success mt-1" id="4_lofabutton">Lights off</button>
+                            <button type="button" class="btn btn-success mt-1" id="4_lonabutton"
+                                onclick=lampUpdate(4,1)>Lights on</button>
+                            <button type="button" class="btn btn-success mt-1" id="4_lofabutton"
+                                onclick=lampUpdate(4,0)>Lights off</button>
                         </div>
-    
-    
+
+
                         <div class="form-floating mb-3 mt-1">
                             <input type="time" class="form-control" id="4_lona">
                             <label for="4_lona">Lights on at:</label>
@@ -406,51 +414,51 @@
                             <input type="time" class="form-control" id="4_lofa">
                             <label for="4_lofa">Lights off at:</label>
                         </div>
-    
+
                     </div>
                     <div class="col-sm">
-    
-                        <button type="button" class="btn btn-success mt-1">Test spray</button>
-    
+
+                        <button type="button" class="btn btn-success mt-1" onclick="spraytest(4)">Test spray</button>
+
                         <div class="form-floating mb-3 mt-1">
                             <input type="text" class="form-control" id="4_spraytime">
                             <label for="4_spraytime">Spray time [s]:</label>
                         </div>
-    
+
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="4_crithumid">
                             <label for="4_crithumid">Critical humidity:</label>
                         </div>
-    
-    
-    
+
+
+
                     </div>
                     <div class="col-sm justify-content-end">
-    
+
                         <div class="mb-3">
                             <label for="4_schedule" class="form-label">Schedule:</label>
                             <textarea class="form-control form-control-lg" style="resize: none;" id="4_schedule"
                                 rows="3"></textarea>
-    
+
                         </div>
                         <button type="button" class="btn btn-success" onclick=saveAll(4)>Save all</button>
-    
-    
+
+
                     </div>
-    
+
                 </div>
-    
-    
-    
+
+
+
             </div>
-    
-    
+
+
         </div>
-    
-    
+
+
     </div>
 
-    
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -468,7 +476,14 @@
 
             setInterval(async () => {
                 await fetchData();
+                await updateStats();
             }, 1000 * dataRefreshRate);
+
+            setInterval(async () => {
+                let result = await fetch("/getwaterlevel");
+                document.getElementById("waterlevelbar").value = await result;
+                console.log("Getting water level.")
+            }, 1000 );
 
             await fetchData();
             updateUI();
@@ -479,6 +494,7 @@
             let dataResponse = await fetch("/getdata");
             let data = await dataResponse.json();
             plantBoxes = data;
+
         }
 
         //deze default values werken ni
@@ -524,11 +540,28 @@
 
 
 
+        }
+        // Status zou een bool moeten zijn maar is gwn 1 of 0
+        //dit is ook traag
+        //update pas de volgende update ronde
+        function lampUpdate(id, status) {
+            fetch(`/lamp?id=${id}&status=${status}`);
+            console.log("setting status for lamp " + id + " to " + status)
+            fetchData();
+            updateStats();
+            
 
         }
 
-        // Call deze functie enkel on reload of save all. (save all nog doen)
+        function spraytest(id) {
+            fetch(`/spraytest?id=${id}`);
+
+        }
+
+        // Call deze functie enkel on reload of save all. (save all nog doen hmmm)
         function updateUI() {
+
+            updateStats();
             console.log("Updating UI");
             for (let i = 1; i <= Object.keys(plantBoxes).length; i++) {
                 const id_prefix = i + "_";
@@ -539,8 +572,8 @@
                 document.getElementById(id_prefix + "date").value = datesplits[0];
                 //deze tijdsomzetting wil ik efficienter
                 let lonas = plantBoxes[i].lona
-                let lonah = Math.floor(lonas/3600);
-                let lonam = (lonas % 3600)/60;
+                let lonah = Math.floor(lonas / 3600);
+                let lonam = (lonas % 3600) / 60;
                 if (lonah < 10) {
                     lonah = new String("0" + lonah)
                 }
@@ -567,6 +600,28 @@
                 document.getElementById(id_prefix + "crithumid").value = plantBoxes[i].crithumid;
                 document.getElementById(id_prefix + "schedule").value = plantBoxes[i].schedule;
             }
+        }
+
+        async function updateStats() {
+            fetchData();
+            console.log(plantBoxes);
+            console.log("Updating Stats");
+            for (let i = 1; i <= Object.keys(plantBoxes).length; i++) {
+                const id_prefix = i + "_";
+
+                document.getElementById(id_prefix + "dayssince").value = plantBoxes[i].days_planted;
+                document.getElementById(id_prefix + "humid").value = plantBoxes[i].humidity;
+
+                if (plantBoxes[i].light_status == 1) {
+                    document.getElementById(id_prefix + "lightstatus").value = "On"
+                } else if (plantBoxes[i].light_status == 0) {
+                    document.getElementById(id_prefix + "lightstatus").value = "Off"
+                }
+
+                document.getElementById(id_prefix + "lastspray").value = plantBoxes[i].last_spray;
+
+            }
+
         }
 
         main();
