@@ -480,9 +480,9 @@
             }, 1000 * dataRefreshRate);
 
             setInterval(async () => {
-                let result = await fetch("/getwaterlevel");
-                document.getElementById("waterlevelbar").value = await result;
-                console.log("Getting water level.")
+                // let result = await fetch("/getwaterlevel");
+                // document.getElementById("waterlevelbar").value = await result;
+                // console.log("Getting water level.")
             }, 1000 );
 
             await fetchData();
@@ -507,19 +507,19 @@
             let crithumid = document.getElementById(id + "_crithumid").value ?? 0;
             let schedule = document.getElementById(id + "_schedule").value ?? "";
 
-            lonasplits = lona.split(":");
-            lonas = parseInt(lonasplits[0]) * 3600 + parseInt(lonasplits[1]) * 60;
-            lofasplits = lofa.split(":");
-            lofas = parseInt(lofasplits[0]) * 3600 + parseInt(lofasplits[1]) * 60;
-            spraytime = parseInt(spraytime);
-            crithumid = parseFloat(crithumid);
+            // lonasplits = lona.split(":");
+            // lonas = parseInt(lonasplits[0]) * 3600 + parseInt(lonasplits[1]) * 60;
+            // lofasplits = lofa.split(":");
+            // lofas = parseInt(lofasplits[0]) * 3600 + parseInt(lofasplits[1]) * 60;
+            // spraytime = parseInt(spraytime);
+            // crithumid = parseFloat(crithumid);
 
 
             var plantbak = {
                 "name": name,
                 "date": date,
-                "lona": lonas,
-                "lofa": lofas,
+                "lona": lona,
+                "lofa": lofa,
                 "spraytime": spraytime,
                 "crithumid": crithumid,
                 "schedule": schedule
@@ -571,30 +571,32 @@
                 datesplits = stringDate.split("T");
                 document.getElementById(id_prefix + "date").value = datesplits[0];
                 //deze tijdsomzetting wil ik efficienter
-                let lonas = plantBoxes[i].lona
-                let lonah = Math.floor(lonas / 3600);
-                let lonam = (lonas % 3600) / 60;
-                if (lonah < 10) {
-                    lonah = new String("0" + lonah)
-                }
-                if (lonam < 10) {
-                    lonam = new String("0" + lonam)
-                }
-                lonaString = new String(lonah + ":" + lonam);
-                document.getElementById(id_prefix + "lona").value = lonaString;
+                // let lonas = plantBoxes[i].lona
+                // let lonah = Math.floor(lonas / 3600);
+                // let lonam = (lonas % 3600) / 60;
+                // if (lonah < 10) {
+                //     lonah = new String("0" + lonah)
+                // }
+                // if (lonam < 10) {
+                //     lonam = new String("0" + lonam)
+                // }
+                // lonaString = new String(lonah + ":" + lonam);
+                // document.getElementById(id_prefix + "lona").value = lonaString;
 
-                let lofas = plantBoxes[i].lofa
-                let lofah = Math.floor(lofas / 3600);
-                let lofam = (lofas % 3600) / 60;
-                if (lofah < 10) {
-                    lofah = new String("0" + lofah)
-                }
-                if (lofam < 10) {
-                    lofam = new String("0" + lofam)
-                }
-                lofaString = new String(lofah + ":" + lofam);
-                document.getElementById(id_prefix + "lofa").value = lofaString;
+                // let lofas = plantBoxes[i].lofa
+                // let lofah = Math.floor(lofas / 3600);
+                // let lofam = (lofas % 3600) / 60;
+                // if (lofah < 10) {
+                //     lofah = new String("0" + lofah)
+                // }
+                // if (lofam < 10) {
+                //     lofam = new String("0" + lofam)
+                // }
+                // lofaString = new String(lofah + ":" + lofam);
+                // document.getElementById(id_prefix + "lofa").value = lofaString;
 
+                document.getElementById(id_prefix + "lona").value = plantBoxes[i].lona;
+                document.getElementById(id_prefix + "lofa").value = plantBoxes[i].lofa;
 
                 document.getElementById(id_prefix + "spraytime").value = plantBoxes[i].spraytime;
                 document.getElementById(id_prefix + "crithumid").value = plantBoxes[i].crithumid;

@@ -9,8 +9,8 @@ from pydantic import BaseModel
 class PlantBoxDataReceive(BaseModel):
     name: str
     date: datetime = datetime(2022, 1, 1)
-    lona: int
-    lofa: int
+    lona: str
+    lofa: str
     spraytime: int
     crithumid: float
     schedule: str
@@ -20,8 +20,8 @@ class PlantBox:
         self.id = id
         self.name = ""
         self.date: datetime = datetime(2022, 1, 1)
-        self.lona = 0
-        self.lofa = 0
+        self.lona: str
+        self.lofa: str
         self.spraytime = 0
         self.crithumid: float = 0
         self.schedule = "" 
