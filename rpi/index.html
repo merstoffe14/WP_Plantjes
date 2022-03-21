@@ -544,10 +544,10 @@
         // Status zou een bool moeten zijn maar is gwn 1 of 0
         //dit is ook traag
         //update pas de volgende update ronde
-        function lampUpdate(id, status) {
-            fetch(`/lamp?id=${id}&status=${status}`);
+        async function lampUpdate(id, status) {
+            await fetch(`/lamp?id=${id}&status=${status}`);
             console.log("setting status for lamp " + id + " to " + status)
-            fetchData();
+            await fetchData();
             updateStats();
             
 

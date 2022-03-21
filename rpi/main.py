@@ -8,6 +8,7 @@ from models import PlantBoxDataReceive
 from runner import BackgroundRunner
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
+import threading
 
 
 
@@ -18,7 +19,10 @@ runner = BackgroundRunner()
 @app.on_event('startup')
 async def app_startup():
     await runner.load_data()
-    asyncio.create_task(runner.run_main())
+    # asyncio.create_task(runner.run_main())
+    thread = threading.Thread(target=runner.run_main)
+    thread.start()
+    
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -59,6 +63,7 @@ async def update_plantbox_name(plantbox_data: PlantBoxDataReceive, id: int):
     stored_box = runner.plant_boxes[str(id)]
     stored_box.user_update(plantbox_data)
     await runner.save_data()
+    runner.reschedule(id)
 
     return Response(status_code=200)
 
@@ -68,7 +73,7 @@ async def lamp(id: int, status: int):
     #Validate
     if str(id) not in runner.plant_boxes:
         return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
-    await runner.lamp(id,status)
+    runner.lamp(id,status)
     await runner.save_data()
     return Response(status_code=200)
 
