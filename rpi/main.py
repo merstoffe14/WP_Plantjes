@@ -2,7 +2,6 @@ from datetime import datetime
 from fastapi import FastAPI, Response
 from fastapi.responses import HTMLResponse
 import asyncio
-import jsonpickle
 from models import PlantBox
 from models import PlantBoxDataReceive
 from runner import BackgroundRunner

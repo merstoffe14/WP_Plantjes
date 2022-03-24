@@ -507,14 +507,6 @@
             let crithumid = document.getElementById(id + "_crithumid").value ?? 0;
             let schedule = document.getElementById(id + "_schedule").value ?? "";
 
-            // lonasplits = lona.split(":");
-            // lonas = parseInt(lonasplits[0]) * 3600 + parseInt(lonasplits[1]) * 60;
-            // lofasplits = lofa.split(":");
-            // lofas = parseInt(lofasplits[0]) * 3600 + parseInt(lofasplits[1]) * 60;
-            // spraytime = parseInt(spraytime);
-            // crithumid = parseFloat(crithumid);
-
-
             var plantbak = {
                 "name": name,
                 "date": date,
@@ -543,7 +535,7 @@
         }
         // Status zou een bool moeten zijn maar is gwn 1 of 0
         //dit is ook traag
-        //update pas de volgende update ronde
+       
         async function lampUpdate(id, status) {
             await fetch(`/lamp?id=${id}&status=${status}`);
             console.log("setting status for lamp " + id + " to " + status)
@@ -570,30 +562,6 @@
                 let stringDate = new String(plantBoxes[i].date);
                 datesplits = stringDate.split("T");
                 document.getElementById(id_prefix + "date").value = datesplits[0];
-                //deze tijdsomzetting wil ik efficienter
-                // let lonas = plantBoxes[i].lona
-                // let lonah = Math.floor(lonas / 3600);
-                // let lonam = (lonas % 3600) / 60;
-                // if (lonah < 10) {
-                //     lonah = new String("0" + lonah)
-                // }
-                // if (lonam < 10) {
-                //     lonam = new String("0" + lonam)
-                // }
-                // lonaString = new String(lonah + ":" + lonam);
-                // document.getElementById(id_prefix + "lona").value = lonaString;
-
-                // let lofas = plantBoxes[i].lofa
-                // let lofah = Math.floor(lofas / 3600);
-                // let lofam = (lofas % 3600) / 60;
-                // if (lofah < 10) {
-                //     lofah = new String("0" + lofah)
-                // }
-                // if (lofam < 10) {
-                //     lofam = new String("0" + lofam)
-                // }
-                // lofaString = new String(lofah + ":" + lofam);
-                // document.getElementById(id_prefix + "lofa").value = lofaString;
 
                 document.getElementById(id_prefix + "lona").value = plantBoxes[i].lona;
                 document.getElementById(id_prefix + "lofa").value = plantBoxes[i].lofa;
@@ -608,10 +576,20 @@
             fetchData();
             console.log(plantBoxes);
             console.log("Updating Stats");
+
+            var today = new Date();
+            var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            var todaydate = new Date(date);
+            
             for (let i = 1; i <= Object.keys(plantBoxes).length; i++) {
                 const id_prefix = i + "_";
 
-                document.getElementById(id_prefix + "dayssince").value = plantBoxes[i].days_planted;
+               
+                var plantsplit_step = plantBoxes[i].date.split("T");
+                plantddate = new Date(plantsplit_step[0]);
+                datediff = dateDiffInDays(plantddate, todaydate);
+                            
+                document.getElementById(id_prefix + "dayssince").value = datediff;
                 document.getElementById(id_prefix + "humid").value = plantBoxes[i].humidity;
 
                 if (plantBoxes[i].light_status == 1) {
@@ -625,6 +603,22 @@
             }
 
         }
+
+        const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+            // a and b are javascript Date objects
+            function dateDiffInDays(a, b) {
+                // Discard the time and time-zone information.
+                const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+                const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+                return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+            }
+
+            // test it
+            const a = new Date("2017-01-01"),
+                b = new Date("2017-07-25"),
+                difference = dateDiffInDays(a, b);
 
         main();
 

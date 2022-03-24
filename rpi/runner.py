@@ -63,6 +63,9 @@ class BackgroundRunner:
 
         print("Turning " + str(id) + " " + str(status) + " gedoe")
 
+
+
+    # als deze gecalled wordt via test spray runned die niet in een aparte thread en dan staat alles stil voor spraytime aantal seconde
     def spray(self, id: int, spraytime: int):
         now = datetime.now()
         self.plant_boxes[str(id)].last_spray = now.strftime("%H:%M:%S")
