@@ -1,0 +1,4 @@
+rpi/.vscode/
+rpi/node_modules/
+rpi/.idea/
+rpi/__pycache__/
