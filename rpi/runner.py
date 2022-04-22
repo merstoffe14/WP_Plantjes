@@ -10,6 +10,8 @@ import schedule
 import time
 import re
 import RPi.GPIO as GPIO
+import Adafruit_GPIO.SPI as SPI
+import Adafruit_MCP3008
 
 
 
@@ -26,26 +28,51 @@ class BackgroundRunner:
 
     def run_main(self):
 
-        self.time_pump_safety = 0.5
-        self.time_pump_prime = 0
+        # Define all pins:
 
-        self.lamp_1_pin = 1
-        self.lamp_2_pin = 7
-        self.lamp_3_pin = 8
-        self.lamp_4_pin = 25
-        self.valve_1_pin = 0
-        self.valve_2_pin = 5
-        self.valve_3_pin = 6
-        self.valve_4_pin = 13
+        self.moistPower_pin = 26 
+
+        self.trigger_pin = 3
+        self.echo_pin = 17
+
+        self.lamp_1_pin = 24
+        self.lamp_2_pin = 25
+        self.lamp_3_pin = 7
+        self.lamp_4_pin = 1 
+        self.valve_1_pin = 5
+        self.valve_2_pin = 6
+        self.valve_3_pin = 13
+        self.valve_4_pin = 0
         self.pump_pin = 19
+
+        # Put pins in pinarrays (for ease of use in loops)
 
         self.lamppin_array = [self.lamp_1_pin, self.lamp_2_pin, self.lamp_3_pin, self.lamp_4_pin]
         self.valvepin_array = [self.valve_1_pin, self.valve_2_pin, self.valve_3_pin, self.valve_4_pin]
+
+        # Define various settings
+        self.time_pump_safety = 0.5 # [s]
+        self.time_pump_prime = 0 # [s]
+        self.TANK_FULL = 3 # [cm]
+        self.TANK_EMPTY = 32  # [cm]
+        self.MOISTURE_SENSING_TIME = 1*60 # [s]
+        self.MOISTURE_MAX = 1015 # [ul]
+        self.MOISTURE_MIN = 200 # [ul]
         
+        # Set GPIO modes
         GPIO.setmode(GPIO.BCM)
         GPIO.setwarnings(False)
         chan_list = [self.lamp_1_pin, self.lamp_2_pin, self.lamp_3_pin,  self.lamp_4_pin, self.valve_1_pin, self.valve_2_pin, self.valve_3_pin, self.valve_4_pin, self.pump_pin]  
         GPIO.setup(chan_list, GPIO.OUT)
+        GPIO.setup(self.trigger_pin, GPIO.OUT)
+        GPIO.setup(self.echo_pin, GPIO.IN)
+        GPIO.setup(self.moistPower_pin, GPIO.OUT)
+        GPIO.output(self.trigger_pin, GPIO.LOW)
+
+        # Set up ADC mcp3008
+        HW_SPI_PORT = 0  # Set the SPI Port. Raspi has two.
+        HW_SPI_DEV = 0  # Set the SPI Device
+        self.mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(HW_SPI_PORT, HW_SPI_DEV))
 
         while True:
             time.sleep(1)
@@ -116,8 +143,70 @@ class BackgroundRunner:
         print("Spray done")
 
 
-    async def getwaterlevel():
-        return 0.30
+    async def getwaterlevel(self):
+
+        print("Measuring water distance")
+        GPIO.output(self.trigger_pin, GPIO.HIGH)
+        time.sleep(0.00001) 
+        GPIO.output(self.trigger_pin, GPIO.LOW)
+
+        while GPIO.input(self.echo_pin) == 0:
+
+                  pulse_start_time = time.time()
+        while GPIO.input(self.echo_pin)==1:
+
+                  pulse_end_time = time.time()
+
+        pulse_duration = pulse_end_time - pulse_start_time
+        distance = round(pulse_duration * 17150, 2)
+        print("Distance:",distance,"cm")
+        tank_level = 1 - distance/(self.TANK_EMPTY-self.TANK_FULL)
+        if (tank_level > 1):
+            tank_level = 1
+        elif (tank_level < 0):
+            tank_level = 0
+
+        print(tank_level)
+        return tank_level
+
+    async def all_lamps(self, status):
+        for x in range(4):
+            GPIO.output(self.lamppin_array[x], status)
+
+    async def prime(self):
+        for x in range(4):
+            GPIO.output(self.valvepin_array[x], True)
+        time.sleep(self.time_pump_safety)
+        GPIO.output(self.pump_pin, True)
+        time.sleep(0.5)
+        GPIO.output(self.pump_pin, False)
+        for x in range(4):
+            GPIO.output(self.valvepin_array[x], False)
+
+
+    async def getMoisture(self):
+        GPIO.output(self.moistPower_pin, GPIO.HIGH)
+        moistlist = [[],[],[],[]]
+        moistval = []
+        moistperc = []
+
+        for i in range(10):
+            asyncio.sleep(1)
+            print("moist loop: " + i)
+            moistlist[0].append(self.mcp.read_adc(0))
+            moistlist[1].append(self.mcp.read_adc(1))
+            moistlist[2].append(self.mcp.read_adc(2))
+            moistlist[3].append(self.mcp.read_adc(3))
+
+        for i in range(3):
+            moistval.append(sum(moistlist[i]/len(moistlist[i])))
+            moistperc.append = moistval[i]/(self.MOISTURE_MAX-self.MOISTURE_MIN)
+            self.plant_boxes(str(i+1)).humidity = moistperc[i]
+
+        GPIO.output(self.moistPower_pin, GPIO.LOW)
+
+       
+        
 
     def reschedule(self, id):
         plantbox = self.plant_boxes[str(id)]
@@ -135,7 +224,6 @@ class BackgroundRunner:
             if scoop:
                 schedule.every().day.at(i).do(lambda: self.spray(id,plantbox.spraytime)).tag(str(id))
             
-
 
     def loop(self):
         schedule.run_pending()

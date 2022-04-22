@@ -19,17 +19,22 @@
 
 
 
-    <div class="alert alert-success sticky-top" role="alert">
+    <div class="alert alert-secondary sticky-top" role="alert">
 
 
 
         <div class="progress">
-            <div class="progress-bar progress-bar-striped" id="waterlevelbar" role="progressbar" style="width: 25%;"
-                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="waterlevelbar" role="progressbar" style="width: 30%;"
+                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>
         </div>
 
         <p id="alerttext"></p>
         <a href="howto" class="btn btn-info" role="button">How to?</a>
+        <button type="button" class="btn btn-warning" onclick=all_lamps(1)>All lamps on</button>
+        <button type="button" class="btn btn-warning" onclick=all_lamps(0)>All lamps off</button>
+        <button type="button" class="btn btn-primary" onclick=prime_lines()>Prime water lines</button>
+        <button type="button" class="btn btn-primary" onclick=get_moisture()>Force moisture update</button>
+
     </div>
 
 
@@ -480,13 +485,24 @@
             }, 1000 * dataRefreshRate);
 
             setInterval(async () => {
-                // let result = await fetch("/getwaterlevel");
-                // document.getElementById("waterlevelbar").value = await result;
-                // console.log("Getting water level.")
-            }, 1000 );
+                let result = await fetch("/getwaterlevel");
+                value = await result.text();
+                percentage = value*100;
+                console.log("Getting water level.");
+                console.log(percentage);
+                document.getElementById("waterlevelbar").innerText = percentage + "%";
+                document.getElementById("waterlevelbar").style = "width: " + percentage + "%;";
+                
+            }, 5000 );
+
+             setInterval(async () => {
+                get_moisture();
+
+            }, 60*1);
 
             await fetchData();
             updateUI();
+            
         }
 
         async function fetchData() {
@@ -535,7 +551,23 @@
         }
         // Status zou een bool moeten zijn maar is gwn 1 of 0
         //dit is ook traag
-       
+
+        async function all_lamps(status) {
+
+            fetch(`/alllamps?status=${status}`);
+            await fetchData();
+            updateStats();
+
+        }
+
+        async function prime_lines() {
+            await fetch(`/prime`);
+        }
+
+        async function get_moisture() {
+            await fetch(`/getmoisture`);
+        }
+
         async function lampUpdate(id, status) {
             await fetch(`/lamp?id=${id}&status=${status}`);
             console.log("setting status for lamp " + id + " to " + status)
@@ -569,6 +601,7 @@
                 document.getElementById(id_prefix + "spraytime").value = plantBoxes[i].spraytime;
                 document.getElementById(id_prefix + "crithumid").value = plantBoxes[i].crithumid;
                 document.getElementById(id_prefix + "schedule").value = plantBoxes[i].schedule;
+                document.getElementById(id_prefix + "humidity").value = plantBoxes[i].humidity;
             }
         }
 

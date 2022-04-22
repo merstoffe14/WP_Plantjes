@@ -42,7 +42,8 @@ async def read_gettime():
 
 @app.get("/getwaterlevel")
 async def read_getwaterlevel():
-    return runner.getwaterlevel()
+    percentage = await runner.getwaterlevel()
+    return percentage
 
 
 @app.get("/getdata")
@@ -83,6 +84,20 @@ async def spraytest(id: int):
     if str(id) not in runner.plant_boxes:
         return JSONResponse(status_code=404, content={"error": "Plantbox not found"})
     await runner.spray(id,runner.plant_boxes[str(id)].spraytime)
+
+
+@app.get("/prime")
+async def prime():
+    await runner.prime()
+
+
+@app.get("/alllamps")
+async def alllamps(status: int):
+    await runner.all_lamps(status)
+
+@app.get("/getmoisture")
+async def getmoisture():
+    await runner.getMoisture()
 
 
     
