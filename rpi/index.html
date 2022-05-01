@@ -12,7 +12,7 @@
 
 
 
-    <title>Plantweb</title>
+    <title>Herbalife</title>
 </head>
 
 <body>
@@ -24,8 +24,8 @@
 
 
         <div class="progress">
-            <div class="progress-bar progress-bar-striped progress-bar-animated" id="waterlevelbar" role="progressbar" style="width: 30%;"
-                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>
+            <div class="progress-bar progress-bar-striped progress-bar-animated" id="waterlevelbar" role="progressbar"
+                style="width: 30%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">0%</div>
         </div>
 
         <p id="alerttext"></p>
@@ -34,6 +34,10 @@
         <button type="button" class="btn btn-warning" onclick=all_lamps(0)>All lamps off</button>
         <button type="button" class="btn btn-primary" onclick=prime_lines()>Prime water lines</button>
         <button type="button" class="btn btn-primary" onclick=get_moisture()>Force moisture update</button>
+        <button type="button" class="btn btn-primary" onclick=critmoist()>Force low moisture check</button>
+        <button type="button" class="btn btn-primary" onclick=getwaterlevel()>Force water level update</button>
+
+
 
     </div>
 
@@ -41,7 +45,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid red;">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid grey;">
 
                 <div class="col">
 
@@ -69,11 +73,12 @@
                         <input type="text" class="form-control" id="1_lightstatus" readonly>
                         <label for="1_lightstatus">Light status:</label>
                     </div>
-
+                    <!--
                     <div class="form-floating mb-1">
                         <input type="datetime" class="form-control" id="1_lastspray" readonly>
                         <label for="1_lastspray">Last spray:</label>
                     </div>
+                -->
 
                     </ul>
                 </div>
@@ -82,7 +87,7 @@
 
 
 
-            <div class="col d-none d-sm-inline" style="border: 5px solid red;">
+            <div class="col d-none d-sm-inline" style="border: 5px solid grey;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
@@ -147,7 +152,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid green;">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid grey;">
 
                 <div class="col">
 
@@ -176,10 +181,12 @@
                         <label for="2_lightstatus">Light status:</label>
                     </div>
 
+                    <!--
                     <div class="form-floating mb-1">
                         <input type="datetime" class="form-control" id="2_lastspray" readonly>
                         <label for="2_lastspray">Last spray:</label>
                     </div>
+                     -->
 
                     </ul>
                 </div>
@@ -188,7 +195,7 @@
 
 
 
-            <div class="col d-none d-sm-inline" style="border: 5px solid green;">
+            <div class="col d-none d-sm-inline" style="border: 5px solid grey;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
@@ -253,7 +260,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid blue;">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid grey;">
 
                 <div class="col">
 
@@ -282,10 +289,12 @@
                         <label for="3_lightstatus">Light status:</label>
                     </div>
 
+                    <!--
                     <div class="form-floating mb-1">
                         <input type="datetime" class="form-control" id="3_lastspray" readonly>
                         <label for="3_lastspray">Last spray:</label>
                     </div>
+                    -->
 
                     </ul>
                 </div>
@@ -294,7 +303,7 @@
 
 
 
-            <div class="col d-none d-sm-inline" style="border: 5px solid blue;">
+            <div class="col d-none d-sm-inline" style="border: 5px solid grey;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
@@ -359,7 +368,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid black;">
+            <div class="col-6 col-sm-3 d-flex" style="border: 5px solid grey;">
 
                 <div class="col">
 
@@ -388,10 +397,12 @@
                         <label for="4_lightstatus">Light status:</label>
                     </div>
 
+                    <!--
                     <div class="form-floating mb-1">
                         <input type="datetime" class="form-control" id="4_lastspray" readonly>
                         <label for="4_lastspray">Last spray:</label>
                     </div>
+                    -->
 
                     </ul>
                 </div>
@@ -400,7 +411,7 @@
 
 
 
-            <div class="col d-none d-sm-inline" style="border: 5px solid black;">
+            <div class="col d-none d-sm-inline" style="border: 5px solid grey;">
                 <div class="row">
                     <div class="col-sm">
                         <div>
@@ -471,9 +482,14 @@
 
     <script>
         let plantBoxes = {};
-        const dataRefreshRate = 5; // In seconds
+
+        const dataRefreshRate = 5; // [s]
+        const waterlevelRefreshRate = 20; // [s]
+        const moistureRefreshRate = 10; // [minutes]
+        const lowmoistureRefreshRate = 30; // [minutes]
 
         async function main() {
+            await get_moisture();
             setInterval(async () => {
                 let result = await fetch("/gettime");
                 document.getElementById("alerttext").innerText = await result.text();
@@ -485,24 +501,23 @@
             }, 1000 * dataRefreshRate);
 
             setInterval(async () => {
-                let result = await fetch("/getwaterlevel");
-                value = await result.text();
-                percentage = value*100;
-                console.log("Getting water level.");
-                console.log(percentage);
-                document.getElementById("waterlevelbar").innerText = percentage + "%";
-                document.getElementById("waterlevelbar").style = "width: " + percentage + "%;";
-                
-            }, 5000 );
+                await getwaterlevel();
 
-             setInterval(async () => {
+            }, 1000 * waterlevelRefreshRate);
+
+            setInterval(async () => {
                 get_moisture();
 
-            }, 60*1);
+            }, 60 * 1000 * moistureRefreshRate);
+
+            setInterval(async () => {
+                critmoist();
+            }, 60 * 1000 * lowmoistureRefreshRate);
+
 
             await fetchData();
             updateUI();
-            
+
         }
 
         async function fetchData() {
@@ -513,7 +528,24 @@
 
         }
 
-        //deze default values werken ni
+        async function critmoist() {
+            console.log("checking if moisture is low")
+            await fetch(`/critmoist`);
+
+        }
+
+        async function getwaterlevel() {
+            let result = await fetch("/getwaterlevel");
+            value = await result.text();
+            percentage = Math.round(value * 100);
+            console.log("Getting water level.");
+            console.log(percentage);
+            document.getElementById("waterlevelbar").innerText = percentage + "%";
+            document.getElementById("waterlevelbar").style = "width: " + percentage + "%;";
+
+        }
+
+        // These default values do not work, but they are optional anyways
         async function saveAll(id) {
             let name = document.getElementById(id + "_name").value ?? "Plantbak " + id;
             let date = new Date(document.getElementById(id + "_date").value ?? "2022-01-01");
@@ -534,7 +566,7 @@
             };
 
 
-            //iets maken om te checken of empty
+            // I should make something here to check if the values are empty
 
 
             let payload = JSON.stringify(plantbak);
@@ -546,18 +578,13 @@
                 body: payload
             });
 
-
-
         }
-        // Status zou een bool moeten zijn maar is gwn 1 of 0
-        //dit is ook traag
 
         async function all_lamps(status) {
 
             fetch(`/alllamps?status=${status}`);
             await fetchData();
             updateStats();
-
         }
 
         async function prime_lines() {
@@ -566,6 +593,7 @@
 
         async function get_moisture() {
             await fetch(`/getmoisture`);
+            updateStats();
         }
 
         async function lampUpdate(id, status) {
@@ -573,16 +601,12 @@
             console.log("setting status for lamp " + id + " to " + status)
             await fetchData();
             updateStats();
-            
-
         }
 
         function spraytest(id) {
             fetch(`/spraytest?id=${id}`);
-
         }
 
-        // Call deze functie enkel on reload of save all. (save all nog doen hmmm)
         function updateUI() {
 
             updateStats();
@@ -601,7 +625,6 @@
                 document.getElementById(id_prefix + "spraytime").value = plantBoxes[i].spraytime;
                 document.getElementById(id_prefix + "crithumid").value = plantBoxes[i].crithumid;
                 document.getElementById(id_prefix + "schedule").value = plantBoxes[i].schedule;
-                document.getElementById(id_prefix + "humidity").value = plantBoxes[i].humidity;
             }
         }
 
@@ -613,15 +636,15 @@
             var today = new Date();
             var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             var todaydate = new Date(date);
-            
+
             for (let i = 1; i <= Object.keys(plantBoxes).length; i++) {
                 const id_prefix = i + "_";
 
-               
+
                 var plantsplit_step = plantBoxes[i].date.split("T");
                 plantddate = new Date(plantsplit_step[0]);
                 datediff = dateDiffInDays(plantddate, todaydate);
-                            
+
                 document.getElementById(id_prefix + "dayssince").value = datediff;
                 document.getElementById(id_prefix + "humid").value = plantBoxes[i].humidity;
 
@@ -631,27 +654,30 @@
                     document.getElementById(id_prefix + "lightstatus").value = "Off"
                 }
 
-                document.getElementById(id_prefix + "lastspray").value = plantBoxes[i].last_spray;
+                // Because of lack of time and lines of code not working for obscure reasons I skipped the whole "Last spray time" part.
+                //document.getElementById(id_prefix + "lastspray").value = plantBoxes[i].last_spray;
 
             }
 
         }
 
+
+        // Thank you stackoverflow https://stackoverflow.com/a/15289883
         const _MS_PER_DAY = 1000 * 60 * 60 * 24;
 
-            // a and b are javascript Date objects
-            function dateDiffInDays(a, b) {
-                // Discard the time and time-zone information.
-                const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
-                const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+        // a and b are javascript Date objects
+        function dateDiffInDays(a, b) {
+            // Discard the time and time-zone information.
+            const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+            const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
 
-                return Math.floor((utc2 - utc1) / _MS_PER_DAY);
-            }
+            return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+        }
 
-            // test it
-            const a = new Date("2017-01-01"),
-                b = new Date("2017-07-25"),
-                difference = dateDiffInDays(a, b);
+        // test it
+        const a = new Date("2017-01-01"),
+            b = new Date("2017-07-25"),
+            difference = dateDiffInDays(a, b);
 
         main();
 

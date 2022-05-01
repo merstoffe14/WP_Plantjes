@@ -54,10 +54,9 @@ class BackgroundRunner:
         self.time_pump_safety = 0.5 # [s]
         self.time_pump_prime = 0 # [s]
         self.TANK_FULL = 3 # [cm]
-        self.TANK_EMPTY = 32  # [cm]
-        self.MOISTURE_SENSING_TIME = 1*60 # [s]
-        self.MOISTURE_MAX = 1015 # [ul]
-        self.MOISTURE_MIN = 200 # [ul]
+        self.TANK_EMPTY = 30 # [cm]
+        self.MOISTURE_MAX = 750 # [ul]
+        self.MOISTURE_MIN = 220 # [ul]
         
         # Set GPIO modes
         GPIO.setmode(GPIO.BCM)
@@ -69,11 +68,13 @@ class BackgroundRunner:
         GPIO.setup(self.moistPower_pin, GPIO.OUT)
         GPIO.output(self.trigger_pin, GPIO.LOW)
 
-        # Set up ADC mcp3008
+        # Set up ADC mcp3008 (Hardware mode)
         HW_SPI_PORT = 0  # Set the SPI Port. Raspi has two.
         HW_SPI_DEV = 0  # Set the SPI Device
         self.mcp = Adafruit_MCP3008.MCP3008(spi=SPI.SpiDev(HW_SPI_PORT, HW_SPI_DEV))
 
+
+        # Run the loop, I planned on using this loop more but in the end I only used it to run the scheduler
         while True:
             time.sleep(1)
             self.loop()
@@ -104,26 +105,25 @@ class BackgroundRunner:
         with open('data.json', 'w') as json_file:
             json_file.write(jsonpickle.encode(self.plant_boxes))
 
-# nog de lampen zelf aan en uit doen, daarom de if
-
+# It would have been easier if status was of type BOOL, but I had some problems with that.
     def lamp(self, id: int, status: int):
+        # Setting the light_status var for the shelf
         if status == 1:
-            self.plant_boxes[str(id)].light_status = 1  
+            self.plant_boxes[str(id)].light_status = 1
         elif status == 0:
             self.plant_boxes[str(id)].light_status = 0
         else:
             print("given status is not a valid status for lamp")
 
+        # Actually turning the lamp on/off
         GPIO.output(self.lamppin_array[id-1], status)
-        print("Turning " + str(id) + " " + str(status) + " gedoe")
+        print("Turning lamp " + str(id) + " to " + str(status))
 
-
-
-
-    # als deze gecalled wordt via test spray runned die niet in een aparte thread en dan staat alles stil voor spraytime aantal seconde
+        
+    # if this function is called via test spray it does not run in a separate thread and then everything stops for a spraytime number of seconds (Notice the clock on the web interface)
+    # A solution would be to make this function async, but then I get problems in the scheduler with lambda.
+    # The save_data is not called async either. This causes a warning in the console.
     def spray(self, id: int, spraytime: int):
-        now = datetime.now()
-        self.plant_boxes[str(id)].last_spray = now.strftime("%H:%M:%S")
         print("Spraying at " + str(id) + " for: " + str(spraytime) + " seconds")
 
         # Valve open
@@ -142,25 +142,34 @@ class BackgroundRunner:
         GPIO.output(self.valvepin_array[id-1], False)
         print("Spray done")
 
+        self.save_data()
 
+    # The logic for this sensor is from: https://www.freva.com/nl/hc-sr04-ultrasone-sensor-gebruiken-met-raspberry-pi/
     async def getwaterlevel(self):
 
         print("Measuring water distance")
-        GPIO.output(self.trigger_pin, GPIO.HIGH)
-        time.sleep(0.00001) 
-        GPIO.output(self.trigger_pin, GPIO.LOW)
+        distance = []
+        for i in range(5):
+            time.sleep(0.1)
+            GPIO.output(self.trigger_pin, GPIO.HIGH)
+            time.sleep(0.00001) 
+            GPIO.output(self.trigger_pin, GPIO.LOW)
 
-        while GPIO.input(self.echo_pin) == 0:
+            while GPIO.input(self.echo_pin) == 0:
 
-                  pulse_start_time = time.time()
-        while GPIO.input(self.echo_pin)==1:
+                    pulse_start_time = time.time()
+            while GPIO.input(self.echo_pin)==1:
 
-                  pulse_end_time = time.time()
+                    pulse_end_time = time.time()
 
-        pulse_duration = pulse_end_time - pulse_start_time
-        distance = round(pulse_duration * 17150, 2)
-        print("Distance:",distance,"cm")
-        tank_level = 1 - distance/(self.TANK_EMPTY-self.TANK_FULL)
+            pulse_duration = pulse_end_time - pulse_start_time
+            distance.append(round(pulse_duration * 17150, 2))
+            
+
+        # Take average of 5 measurements. This is an attempt at decreasing the constant small updates to the progress bar, if this is not sufficient, I will use a rolling avg.
+        avg = sum(distance)/len(distance)
+        print("Distance:",avg,"cm")
+        tank_level = 1 - (avg-self.TANK_FULL)/(self.TANK_EMPTY-self.TANK_FULL)
         if (tank_level > 1):
             tank_level = 1
         elif (tank_level < 0):
@@ -173,6 +182,7 @@ class BackgroundRunner:
         for x in range(4):
             GPIO.output(self.lamppin_array[x], status)
 
+    # This function exsists to get some water in the lines.
     async def prime(self):
         for x in range(4):
             GPIO.output(self.valvepin_array[x], True)
@@ -184,6 +194,8 @@ class BackgroundRunner:
             GPIO.output(self.valvepin_array[x], False)
 
 
+    # This function can be way more efficient.
+    # It takes 10 measurments per sensor and takes the avg.
     async def getMoisture(self):
         GPIO.output(self.moistPower_pin, GPIO.HIGH)
         moistlist = [[],[],[],[]]
@@ -191,22 +203,36 @@ class BackgroundRunner:
         moistperc = []
 
         for i in range(10):
-            asyncio.sleep(1)
-            print("moist loop: " + i)
-            moistlist[0].append(self.mcp.read_adc(0))
-            moistlist[1].append(self.mcp.read_adc(1))
-            moistlist[2].append(self.mcp.read_adc(2))
-            moistlist[3].append(self.mcp.read_adc(3))
+            time.sleep(0.1)
+            print("moist sensing loop: " + str(i))
+            moistlist[3].append(self.mcp.read_adc(0))
+            moistlist[2].append(self.mcp.read_adc(1))
+            moistlist[1].append(self.mcp.read_adc(2))
+            moistlist[0].append(self.mcp.read_adc(3))
 
-        for i in range(3):
-            moistval.append(sum(moistlist[i]/len(moistlist[i])))
-            moistperc.append = moistval[i]/(self.MOISTURE_MAX-self.MOISTURE_MIN)
-            self.plant_boxes(str(i+1)).humidity = moistperc[i]
+        print(moistlist)
+
+        for i in range(4):
+            plantbox = self.plant_boxes[str(i+1)]
+            moistval.append(sum(moistlist[i])/len(moistlist[i]))
+            moistperc.append((moistval[i] - self.MOISTURE_MIN)/(self.MOISTURE_MAX-self.MOISTURE_MIN))
+            calcHumid = round((1 - moistperc[i]), 2)
+            if (calcHumid > 1):
+                calcHumid = 1
+            if (calcHumid < 0):
+                calcHumid = 0
+            plantbox.humidity = calcHumid
+            print(plantbox.humidity)
 
         GPIO.output(self.moistPower_pin, GPIO.LOW)
+        await self.save_data()
 
-       
-        
+    async def critMoist(self):
+        for i in range(4):
+            plantbox = self.plant_boxes[str(i+1)]
+            if (plantbox.humidity < plantbox.crithumid):
+                self.spray(i+1,plantbox.spraytime)
+
 
     def reschedule(self, id):
         plantbox = self.plant_boxes[str(id)]
@@ -227,4 +253,6 @@ class BackgroundRunner:
 
     def loop(self):
         schedule.run_pending()
+        # This is a debug print
+        print(schedule.get_jobs('1'))
         pass

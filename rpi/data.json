@@ -1,1 +1,166 @@
-{"1": {"py/object": "models.PlantBox", "id": 1, "name": "Basilicum", "date": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+YDDAAAAAAAAA==", {"py/reduce": [{"py/type": "datetime.timezone"}, {"py/tuple": [{"py/reduce": [{"py/type": "datetime.timedelta"}, {"py/tuple": [0, 0, 0]}]}]}]}]]}, "lona": "18:00", "lofa": "06:00", "spraytime": 5, "crithumid": 0.3, "schedule": "01:00\n", "days_planted": 0, "humidity": 0, "light_status": 1, "last_spray": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+YBAQAAAAAAAA=="]]}}, "2": {"py/object": "models.PlantBox", "id": 2, "name": "Bieslook", "date": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+UMDwAAAAAAAA==", {"py/id": 3}]]}, "lona": "02:00", "lofa": "23:00", "spraytime": 3, "crithumid": 0.4, "schedule": "13:00\ntest\n1234", "days_planted": 0, "humidity": 0, "light_status": 1, "last_spray": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+YBAQAAAAAAAA=="]]}}, "3": {"py/object": "models.PlantBox", "id": 3, "name": "thijm", "date": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+YBAQAAAAAAAA==", {"py/id": 3}]]}, "lona": "01:00", "lofa": "03:00", "spraytime": 15, "crithumid": 0.2, "schedule": "10:00\n14:00\n19:00", "days_planted": 0, "humidity": 0, "light_status": 0, "last_spray": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+YBAQAAAAAAAA=="]]}}, "4": {"py/object": "models.PlantBox", "id": 4, "name": "Waterkers", "date": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+YDBAAAAAAAAA==", {"py/id": 3}]]}, "lona": "12:34", "lofa": "04:32", "spraytime": 3, "crithumid": 0.1, "schedule": "12:00", "days_planted": 0, "humidity": 0, "light_status": 1, "last_spray": {"py/object": "datetime.datetime", "__reduce__": [{"py/type": "datetime.datetime"}, ["B+YBAQAAAAAAAA=="]]}}}
+{
+    "1": {
+        "py/object": "models.PlantBox",
+        "id": 1,
+        "name": "Basilicum",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YDDAAAAAAAAA==",
+                    {
+                        "py/reduce": [
+                            {
+                                "py/type": "datetime.timezone"
+                            },
+                            {
+                                "py/tuple": [
+                                    {
+                                        "py/reduce": [
+                                            {
+                                                "py/type": "datetime.timedelta"
+                                            },
+                                            {
+                                                "py/tuple": [
+                                                    0,
+                                                    0,
+                                                    0
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            ]
+        },
+        "lona": "18:00",
+        "lofa": "06:00",
+        "spraytime": 2,
+        "crithumid": 0.3,
+        "schedule": "01:00\n",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": 1,
+        "last_spray": "NO t FOUND"
+    },
+    "2": {
+        "py/object": "models.PlantBox",
+        "id": 2,
+        "name": "Bieslook",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+UMDwAAAAAAAA==",
+                    {
+                        "py/id": 3
+                    }
+                ]
+            ]
+        },
+        "lona": "02:00",
+        "lofa": "23:00",
+        "spraytime": 3,
+        "crithumid": 0.4,
+        "schedule": "13:00\ntest\n1234",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": 1,
+        "last_spray": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        }
+    },
+    "3": {
+        "py/object": "models.PlantBox",
+        "id": 3,
+        "name": "thijm",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA==",
+                    {
+                        "py/id": 3
+                    }
+                ]
+            ]
+        },
+        "lona": "01:00",
+        "lofa": "03:00",
+        "spraytime": 2,
+        "crithumid": 0.2,
+        "schedule": "10:00\n14:00\n19:00",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": 0,
+        "last_spray": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        }
+    },
+    "4": {
+        "py/object": "models.PlantBox",
+        "id": 4,
+        "name": "Waterkers",
+        "date": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YDBAAAAAAAAA==",
+                    {
+                        "py/id": 3
+                    }
+                ]
+            ]
+        },
+        "lona": "12:34",
+        "lofa": "04:32",
+        "spraytime": 3,
+        "crithumid": 0.1,
+        "schedule": "12:00",
+        "days_planted": 0,
+        "humidity": 0,
+        "light_status": 1,
+        "last_spray": {
+            "py/object": "datetime.datetime",
+            "__reduce__": [
+                {
+                    "py/type": "datetime.datetime"
+                },
+                [
+                    "B+YBAQAAAAAAAA=="
+                ]
+            ]
+        }
+    }
+}

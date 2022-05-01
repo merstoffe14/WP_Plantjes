@@ -28,7 +28,7 @@ class PlantBox:
         self.days_planted = 0
         self.humidity: float = 0
         self.light_status = 0
-        self.last_spray: datetime = datetime(2022, 1, 1)
+        self.last_spray = "NO TIME FOUND"
 
     def user_update(self, update: PlantBoxDataReceive):
         self.name = update.name
