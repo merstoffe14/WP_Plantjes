@@ -26,7 +26,7 @@ class PlantBox:
         self.crithumid: float = 0
         self.schedule = "" 
         self.days_planted = 0
-        self.humidity: float = 0
+        self.humidity: float = 0    
         self.light_status = 0
         self.last_spray = "NO TIME FOUND"
 
