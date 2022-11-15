@@ -23,7 +23,7 @@ To realize this I used: Python, FastAPI, HTML, css, javascript, bootstrap, RPi.G
 * init_data.json   : when there is no data.json, it copies this one. it is filled with placeholder data.
 * main.py          : The main code, receives and sends everything to and from the web interface and communicates the data to the runner.py
 * models.py        : Define different objects
-* requirements.txt : The packages needed for the software to work (not all of these are needed, there are thing not used)
+* requirements.txt : The packages needed for the software to work (not all of these are needed, there are unused packages.)
 * runner.py        : receives data from main.py. calculates and schedules everything. 
 
 /WP_Plantjes/3d
