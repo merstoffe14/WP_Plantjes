@@ -10,11 +10,16 @@ Front view            |  Side view
 :-------------------------:|:-------------------------:
 ![The front view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/frontview.jpg?raw=true)|![The side view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/SideView.jpg?raw=true)
 
+Control circuitry            |  Power supply/management
+:-------------------------:|:-------------------------:
+![Control circuits](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/control.jpg?raw=true)|![Power](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/power.jpg?raw=true)
 
-![Control circuits](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/control.jpg?raw=true)
-![Power](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/power.jpg?raw=true)
-![Pump and valves](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/pumpnvalves.jpg?raw=true)
-![Website](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/website.jpg?raw=true)
+Pump and valves            |  Website
+:-------------------------:|:-------------------------:
+![Pump and valves](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/pumpnvalves.jpg?raw=true)|![Website](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/website.jpg?raw=true)
+
+
+
 
 
 
