@@ -37,7 +37,7 @@ We also had to make a user manual [user manual](https://github.com/merstoffe14/W
 
 ## The challanges:
 
-* We had to work with 220 V, 12 V, 5 V and 3.3 V
+* We had to work with 220, 12, 5 and 3.3 Volt to control and power all the different systems.
 * Converting a lot of analog signals (moisture sensors) to digital and sending those to the RPI using SPI
 * Having 4, independently controlled, levels. 
 
