@@ -1,0 +1,41 @@
+dit gaat om kabels niet verdiepen
+
+lamp 1: 25
+lamp 2: 24
+lamp 3: 7
+lamp 4: 1
+
+water 1: 0 13
+water 2: 5 0
+water 3: 6 5 
+water 4: 13 6
+
+pomp: 19 
+
+
+--MCP3008--
+CLK: 4
+Dout: 17
+Din: 27
+CS/SHDN: 22
+
+ENABLE SENSORS: 26?
+
+--Ultrasone--
+Echo: 2
+Trig: 3
+
+
+
+raspi-config spi enablen
+
+python -m uvicorn main:app --reload
+
+
+python -m uvicorn --host 192.168.0.225 main:app
+
+bij reset niet vergeten om account root te maken, en dan root ssh te enablen
+
+ifconfig
+
+sudo iwlist wlan0 scanning | grep ESSID
