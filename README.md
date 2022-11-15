@@ -6,6 +6,8 @@ With this website, you could also make different watering schedules (time of day
 
 To realize this I used: Python, FastAPI, HTML, css, javascript, bootstrap, RPi.GPIO, Adafruit_GPIO.SPI, Adafruit_MCP3008
 
+
+## Pictures
 Front view            |  Side view
 :-------------------------:|:-------------------------:
 ![The front view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/frontview.jpg?raw=true)|![The side view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/SideView.jpg?raw=true)
