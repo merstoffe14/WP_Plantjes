@@ -35,6 +35,12 @@ To realize this I used: Python, FastAPI, HTML, css, javascript, bootstrap, RPi.G
 ## User manual
 We also had to make a user manual [user manual](https://github.com/merstoffe14/WP_Plantjes/blob/main/extra_docs/user_manual_g1.pdf)
 
+## The challanges:
+
+* We had to work with 220 V, 12 V, 5 V and 3.3 V
+* Converting a lot of analog signals (moisture sensors) to digital and sending those to the RPI using SPI
+* Having 4, independently controlled, levels. 
+
 
 ## Pictures
 Front view            |  Side view
