@@ -8,8 +8,7 @@ To realize this I used: Python, FastAPI, HTML, css, javascript, bootstrap, RPi.G
 
 Front view            |  Side view
 :-------------------------:|:-------------------------:
-![The front view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/frontview.jpg?raw=true)
-  |  ![The side view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/SideView.jpg?raw=true)
+![The front view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/frontview.jpg?raw=true)|![The side view](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/SideView.jpg?raw=true)
 
 
 ![Control circuits](https://github.com/merstoffe14/WP_Plantjes/blob/main/images/control.jpg?raw=true)
