@@ -8,14 +8,15 @@ With this website, you could also make different watering schedules (time of day
 To realize this I used: Python, FastAPI, HTML, css, javascript, bootstrap, RPi.GPIO, Adafruit_GPIO.SPI, Adafruit_MCP3008
 
 ## File explanation
-/4-WP_GROEP1_final/extra_docs
+
+/WP_Plantjes/extra_docs
 * RPI_pins_and_commands.txt : A file I used to remember some important commands and the * pins used on the RPI
 * WP_Code dikke lijnen.pdf  : A pdf with the code flowchart
 * WP_Water flow chart.pdf   : A pdf with the water flowchart
 * user_manual_g1.pdf        : [The user manual](https://github.com/merstoffe14/WP_Plantjes/blob/main/extra_docs/user_manual_g1.pdf)
 
 
-/4-WP_GROEP1_final/code:
+/WP_Plantjes/code/rpi:
 * data.json        : the file where the rpi saves its data
 * howto.html       : the webpage that shows when you press the how to button.
 * index.html       : the homepage of the system
@@ -25,10 +26,10 @@ To realize this I used: Python, FastAPI, HTML, css, javascript, bootstrap, RPi.G
 * requirements.txt : The packages needed for the software to work (not all of these are needed, there are thing not used)
 * runner.py        : receives data from main.py. calculates and schedules everything. 
 
-/4-WP_GROEP1_final/3d
+/WP_Plantjes/3d
 * kast_schets.ipt  : A 3d model of the first idea.
 
-/4-WP_GROEP1_final/images
+/WP_Plantjes/images
 * a couple of images of the finished/WIP project.
 
 ## User manual
